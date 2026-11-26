@@ -7,350 +7,200 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Montserrat:wght@200;300;400&family=Pinyon+Script&display=swap" rel="stylesheet">
-    
     <style>
-        :root {
-            --bg-color: #050505;
-            --text-primary: #f8f8f8;
-            --text-secondary: #a0a0a0;
-            --accent-red: #7a0000;
-            --accent-red-glow: #4a0000;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-snap-type: y mandatory;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-primary);
-            font-family: 'Montserrat', sans-serif;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Subtle background grain for a premium paper feel */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Smooth Red Glow at the bottom */
-        .red-glow {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 40%;
-            background: radial-gradient(ellipse at 50% 100%, var(--accent-red) 0%, var(--accent-red-glow) 40%, transparent 70%);
-            z-index: 0;
-            opacity: 0.8;
-        }
-
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            padding: 60px 30px;
-            scroll-snap-align: start;
-            z-index: 1;
-        }
-
-        /* Typography */
-        .pre-title {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 200;
-            font-size: 0.75rem;
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-        }
-
-        .script-title {
-            font-family: 'Pinyon Script', cursive;
-            font-size: clamp(5rem, 18vw, 9rem);
-            line-height: 0.85;
-            color: var(--text-primary);
-            margin-bottom: 30px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
-        }
-
-        .script-title span {
-            display: block;
-        }
-
-        .script-title .one {
-            font-size: 0.6em;
-            margin-left: 15%;
-            margin-top: -10px;
-        }
-
-        .welcome-text {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            font-size: clamp(0.7rem, 2.5vw, 0.9rem);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .name-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-            font-size: clamp(3.5rem, 14vw, 7rem);
-            letter-spacing: 12px;
-            text-transform: uppercase;
-            color: var(--text-primary);
-            margin: 10px 0 40px;
-            text-shadow: 0 2px 15px rgba(0,0,0,0.5);
-        }
-
-        .date-text {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            font-size: 0.85rem;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            margin-top: auto;
-            padding-bottom: 40px;
-        }
-
-        /* Programme Page Specifics */
-        .programme-header {
-            margin-bottom: 10px;
-        }
-
-        .mc-info {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
-            letter-spacing: 3px;
-            margin: 20px 0 50px;
-            font-weight: 400;
-            color: var(--text-primary);
-            text-align: center;
-            line-height: 1.5;
-        }
-
-        .programme-list {
-            width: 100%;
-            max-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-        }
-
-        .programme-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 25px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .programme-item:last-child {
-            border-bottom: none;
-        }
-
-        .event-name {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            font-size: 0.85rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-        }
-
-        .event-person {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            font-weight: 400;
-            letter-spacing: 2px;
-            color: var(--text-secondary);
-            text-align: center;
-            line-height: 1.6;
-        }
-
-        /* Elegant Divider */
-        .divider {
-            width: 40px;
-            height: 1px;
-            background: rgba(255,255,255,0.2);
-            margin: 20px auto;
-        }
-
-        /* Navigation Dots - Upgraded for Mobile Tapping */
-        .nav-dots {
-            position: fixed;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .nav-dot {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .nav-dot.active {
-            background: #fff;
-            transform: scale(1.2);
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-
-        /* Scroll Indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            opacity: 0.5;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .scroll-hint span {
-            font-size: 0.6rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-
-        .scroll-line {
-            width: 1px;
-            height: 40px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent);
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(10px); }
-        }
-
-        @media (max-width: 480px) {
-            .name-title { letter-spacing: 6px; }
-            .welcome-text { letter-spacing: 3px; }
-            .pre-title { letter-spacing: 4px; }
-            .date-text { letter-spacing: 5px; }
-        }
+        :root { --bg-color: #050505; --text-primary: #f8f8f8; --text-secondary: #a0a0a0; --accent-red: #7a0000; --accent-red-glow: #4a0000; --gold: #d4af37; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-snap-type: y mandatory; }
+        body { background-color: var(--bg-color); color: var(--text-primary); font-family: 'Montserrat', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        body::before { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events: none; z-index: 0; }
+        .red-glow { position: absolute; bottom: 0; left: 0; width: 100%; height: 40%; background: radial-gradient(ellipse at 50% 100%, var(--accent-red) 0%, var(--accent-red-glow) 40%, transparent 70%); z-index: 0; opacity: 0.8; }
+        section { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; padding: 60px 25px; scroll-snap-align: start; z-index: 1; }
+        .pre-title { font-weight: 200; font-size: 0.75rem; letter-spacing: 6px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 20px; }
+        .script-title { font-family: 'Pinyon Script', cursive; font-size: clamp(5rem, 18vw, 9rem); line-height: 0.85; margin-bottom: 30px; text-shadow: 0 4px 20px rgba(0,0,0,0.8); }
+        .script-title span { display: block; }
+        .script-title .one { font-size: 0.6em; margin-left: 15%; margin-top: -10px; }
+        .welcome-text { font-weight: 300; font-size: clamp(0.7rem, 2.5vw, 0.9rem); letter-spacing: 5px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 20px; text-align: center; }
+        .name-title { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(3.5rem, 14vw, 7rem); letter-spacing: 12px; text-transform: uppercase; margin: 10px 0 40px; text-shadow: 0 2px 15px rgba(0,0,0,0.5); }
+        .date-text { font-weight: 300; font-size: 0.85rem; letter-spacing: 8px; text-transform: uppercase; color: var(--text-secondary); margin-top: auto; padding-bottom: 40px; }
+        .mc-info { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; letter-spacing: 3px; margin: 20px 0 50px; font-weight: 400; text-align: center; line-height: 1.5; }
+        .programme-list { width: 100%; max-width: 500px; }
+        .programme-item { display: flex; flex-direction: column; align-items: center; padding: 25px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .programme-item:last-child { border-bottom: none; }
+        .event-name { font-weight: 300; font-size: 0.85rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; }
+        .event-person { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; letter-spacing: 2px; color: var(--text-secondary); text-align: center; line-height: 1.6; }
+        .divider { width: 40px; height: 1px; background: rgba(255,255,255,0.2); margin: 20px auto; }
+        .nav-dots { position: fixed; right: 15px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 15px; }
+        .nav-dot { width: 14px; height: 14px; border-radius: 50%; background: rgba(255,255,255,0.2); cursor: pointer; transition: all 0.4s ease; border: 1px solid rgba(255,255,255,0.1); }
+        .nav-dot.active { background: #fff; transform: scale(1.2); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        .scroll-hint { position: absolute; bottom: 120px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; opacity: 0.5; animation: float 3s ease-in-out infinite; }
+        .scroll-hint span { font-size: 0.6rem; letter-spacing: 3px; text-transform: uppercase; }
+        .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, rgba(255,255,255,0.5), transparent); }
+        @keyframes float { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(10px); } }
+        .album-wrap { width: 100%; max-width: 700px; z-index: 2; text-align: center; }
+        .album-title { font-family: 'Pinyon Script', cursive; font-size: clamp(3rem, 12vw, 5rem); margin-bottom: 10px; }
+        .album-sub { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 30px; }
+        .upload-btn { display: inline-block; padding: 16px 36px; border: 1px solid var(--gold); color: var(--gold); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: all 0.4s ease; border-radius: 50px; }
+        .upload-btn:hover { background: var(--gold); color: #000; }
+        .upload-btn:disabled { opacity: 0.5; cursor: wait; }
+        .progress-text { font-size: 0.7rem; letter-spacing: 2px; color: var(--text-secondary); margin-top: 15px; min-height: 18px; }
+        .photo-count { font-size: 0.7rem; letter-spacing: 2px; color: var(--text-secondary); margin: 20px 0 10px; }
+        .gallery { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 15px; }
+        .gallery img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 6px; cursor: pointer; transition: transform 0.3s ease, box-shadow 0.3s ease; opacity: 0; animation: fadeIn 0.6s forwards; }
+        .gallery img:hover { transform: scale(1.03); box-shadow: 0 8px 25px rgba(122,0,0,0.4); }
+        .empty-state { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--text-secondary); padding: 30px 0; }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; }
+        .lightbox.open { display: flex; }
+        .lightbox img { max-width: 100%; max-height: 90vh; border-radius: 6px; box-shadow: 0 0 40px rgba(122,0,0,0.5); }
+        .lightbox-close { position: absolute; top: 20px; right: 25px; font-size: 2rem; color: #fff; cursor: pointer; }
+        .config-warning { background: rgba(212,175,55,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 15px; border-radius: 8px; font-size: 0.75rem; letter-spacing: 1px; margin-top: 20px; display: none; }
+        @media (max-width: 480px) { .name-title { letter-spacing: 6px; } .gallery { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
-
     <div class="nav-dots">
         <div class="nav-dot active" onclick="scrollToSection(0)"></div>
         <div class="nav-dot" onclick="scrollToSection(1)"></div>
+        <div class="nav-dot" onclick="scrollToSection(2)"></div>
     </div>
 
-    <!-- PAGE 1: COVER -->
     <section id="page1">
         <div class="red-glow"></div>
-        
         <div style="text-align: center; z-index: 2;">
             <p class="pre-title">Please join us for a</p>
-            
-            <h1 class="script-title">
-                <span>twenty</span>
-                <span class="one">one</span>
-            </h1>
-            
+            <h1 class="script-title"><span>twenty</span><span class="one">one</span></h1>
             <div class="divider"></div>
-            
             <p class="welcome-text">You are welcomed to the celebration of</p>
-            
             <h2 class="name-title">Lwethu</h2>
         </div>
-
-        <div class="scroll-hint">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
-        </div>
-
+        <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
         <p class="date-text">16 December 2026</p>
     </section>
 
-    <!-- PAGE 2: PROGRAMME -->
     <section id="page2">
         <div class="red-glow"></div>
-
         <div style="text-align: center; z-index: 2; width: 100%; display: flex; flex-direction: column; align-items: center;">
-            <p class="pre-title programme-header">The Celebration</p>
-            
-            <h1 class="script-title" style="font-size: clamp(4rem, 14vw, 7rem); margin-bottom: 20px;">
-                <span>twenty</span>
-                <span class="one">one</span>
-            </h1>
-            
+            <p class="pre-title">The Celebration</p>
+            <h1 class="script-title" style="font-size: clamp(4rem, 14vw, 7rem); margin-bottom: 20px;"><span>twenty</span><span class="one">one</span></h1>
             <div class="divider"></div>
-            
             <p class="mc-info">Master of Ceremonies<br>Mpho Kgakatsi</p>
-
             <div class="programme-list">
-                <div class="programme-item">
-                    <span class="event-name">Opening Prayer</span>
-                </div>
-                
-                <div class="programme-item">
-                    <span class="event-name">Welcoming</span>
-                </div>
-                
-                <div class="programme-item">
-                    <span class="event-name">Words of Wisdom</span>
-                    <span class="event-person">Mr Beshu<br>Mr Mazibuko</span>
-                </div>
+                <div class="programme-item"><span class="event-name">Opening Prayer</span></div>
+                <div class="programme-item"><span class="event-name">Welcoming</span></div>
+                <div class="programme-item"><span class="event-name">Words of Wisdom</span><span class="event-person">Mr Beshu<br>Mr Mazibuko</span></div>
             </div>
         </div>
-
         <p class="date-text">16 December 2026</p>
     </section>
 
+    <section id="page3">
+        <div class="red-glow"></div>
+        <div class="album-wrap">
+            <p class="pre-title">Capture the night</p>
+            <h1 class="album-title">Shared Album</h1>
+            <p class="album-sub">Upload your photos & watch them appear here</p>
+            <input type="file" id="fileInput" accept="image/*" multiple hidden>
+            <button class="upload-btn" id="uploadBtn" onclick="document.getElementById('fileInput').click()">📷 Add a Photo</button>
+            <p class="progress-text" id="progressText"></p>
+            <p class="photo-count" id="photoCount"></p>
+            <div class="gallery" id="gallery"></div>
+            <p class="empty-state" id="emptyState">Be the first to share a moment ✨</p>
+            <div class="config-warning" id="configWarning">⚠️ Firebase not connected yet.</div>
+        </div>
+    </section>
+
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">×</span>
+        <img id="lightboxImg" src="" alt="Photo">
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
     <script>
-        function scrollToSection(index) {
-            const sections = document.querySelectorAll('section');
-            sections[index].scrollIntoView({ behavior: 'smooth' });
+        // YOUR FIREBASE KEYS ARE ALREADY HERE!
+        const firebaseConfig = {
+            apiKey: "AIzaSyDPhEhLrgj-Xu4TdLDOMNGvmu314GzS4wc",
+            authDomain: "lwethu-s-21st.firebaseapp.com",
+            projectId: "lwethu-s-21st",
+            storageBucket: "lwethu-s-21st.firebasestorage.app",
+            messagingSenderId: "240086183143",
+            appId: "1:240086183143:web:4654bff2d69edbd97d8642",
+            measurementId: "G-MP83WH1K7E"
+        };
+
+        let storage, photosRef, isFirebaseReady = false;
+
+        function initFirebase() {
+            if (!firebaseConfig.apiKey || firebaseConfig.apiKey.includes("REPLACE")) {
+                document.getElementById('configWarning').style.display = 'block';
+                return;
+            }
+            try {
+                firebase.initializeApp(firebaseConfig);
+                storage = firebase.storage();
+                photosRef = storage.ref().child('photos');
+                isFirebaseReady = true;
+                loadGallery();
+            } catch (e) {
+                console.error(e);
+                document.getElementById('configWarning').style.display = 'block';
+            }
         }
 
+        document.getElementById('fileInput').addEventListener('change', async (e) => {
+            if (!isFirebaseReady) { alert('Please connect Firebase first.'); return; }
+            const files = Array.from(e.target.files);
+            const btn = document.getElementById('uploadBtn');
+            const progress = document.getElementById('progressText');
+            btn.disabled = true;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (!file.type.startsWith('image/')) continue;
+                progress.textContent = `Uploading ${i + 1} of ${files.length}...`;
+                const name = Date.now() + '_' + Math.floor(Math.random() * 1000) + '.' + (file.type.split('/')[1] || 'jpg');
+                try { await photosRef.child(name).put(file); } catch (err) { console.error(err); }
+            }
+            progress.textContent = files.length ? '✅ Uploaded!' : '';
+            btn.disabled = false;
+            e.target.value = '';
+            setTimeout(loadGallery, 500);
+            setTimeout(() => progress.textContent = '', 2500);
+        });
+
+        async function loadGallery() {
+            const gallery = document.getElementById('gallery');
+            const empty = document.getElementById('emptyState');
+            const count = document.getElementById('photoCount');
+            gallery.innerHTML = '';
+            if (!isFirebaseReady) return;
+            try {
+                const res = await photosRef.listAll();
+                if (res.items.length === 0) { empty.style.display = 'block'; count.textContent = ''; return; }
+                empty.style.display = 'none';
+                count.textContent = `${res.items.length} photo${res.items.length > 1 ? 's' : ''} shared`;
+                for (const item of res.items) {
+                    const url = await item.getDownloadURL();
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.loading = 'lazy';
+                    img.onclick = () => openLightbox(url);
+                    gallery.appendChild(img);
+                }
+            } catch (err) { console.error(err); }
+        }
+
+        function openLightbox(url) { document.getElementById('lightboxImg').src = url; document.getElementById('lightbox').classList.add('open'); }
+        function closeLightbox() { document.getElementById('lightbox').classList.remove('open'); }
+        function scrollToSection(index) { document.querySelectorAll('section')[index].scrollIntoView({ behavior: 'smooth' }); }
         window.addEventListener('scroll', () => {
             const sections = document.querySelectorAll('section');
             const dots = document.querySelectorAll('.nav-dot');
-            const scrollPos = window.scrollY + window.innerHeight / 2;
-
-            sections.forEach((section, index) => {
-                if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
-                    dots.forEach(dot => dot.classList.remove('active'));
-                    dots[index].classList.add('active');
-                }
-            });
+            const pos = window.scrollY + window.innerHeight / 2;
+            sections.forEach((s, i) => { if (pos >= s.offsetTop && pos < s.offsetTop + s.offsetHeight) { dots.forEach(d => d.classList.remove('active')); dots[i].classList.add('active'); } });
         });
+
+        initFirebase();
     </script>
 </body>
 </html>
